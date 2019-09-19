@@ -1,0 +1,4 @@
+---
+# vars file for web
+  http_port: 443
+  CNAME: Mycomcastdemo

@@ -1,0 +1,47 @@
+---
+# tasks file for web
+- name: Install httpd
+  yum: 
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - httpd
+    - mod_ssl
+ 
+- name: create A directory
+  file:
+    path: /var/www/{{CNAME}}/public_html
+    state: directory
+    recurse: yes   
+
+- name: create A directory
+  file:
+    path: /var/www/{{CNAME}}/logs
+    state: directory
+    recurse: yes 
+
+- name: template a file to server
+  template:
+    src: vhost.conf
+    dest: /etc/httpd/conf.d/comcastvhost.conf
+    mode: '0664'
+  notify: restart httpd
+      
+
+- name: example copying file with owner and permissions
+  copy:
+    src: index.html
+    dest: /var/www/{{CNAME}}/public_html 
+    mode: 0644
+  notify: restart httpd  
+
+- name: copying certs
+  copy:
+    src: "{{item}}"
+    dest: /etc/pki/tls/certs/
+    mode: 0644
+  with_items:
+    - comcast.csr
+    - comcast.key
+    - comcast.crt
+  notify: restart httpd   
