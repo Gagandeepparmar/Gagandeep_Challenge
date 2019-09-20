@@ -1,5 +1,5 @@
-- hosts: webservice
-  remote_user: vagrant
+- hosts: aws_web
+  remote_user: root
   become: yes
 
   roles:
