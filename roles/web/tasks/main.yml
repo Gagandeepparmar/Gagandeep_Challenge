@@ -4,7 +4,10 @@
   yum: 
     name: "{{ item }}"
     state: latest
+    skip_broken: "yes"
+    update_cache: "yes"
   with_items:
+    - deltarpm
     - httpd
     - mod_ssl
  

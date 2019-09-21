@@ -1,7 +1,7 @@
 provider "aws" {
   region = "us-east-1"
-  access_key = "AKIAIN25CT5YXKNFUW4A"
-  secret_key = "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"
+  access_key = ""
+  secret_key = ""
 }
 
  resource "aws_key_pair" "public-key" {
@@ -39,8 +39,14 @@ resource "aws_security_group" "access-ssh" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"] 
   }
-}
 
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
 resource "aws_security_group" "access-http"{
   name = "access-http"
   ingress {
